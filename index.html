@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>One Last Lunch — A Little Goodbye</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✈️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Space+Mono:wght@400;700&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sky-top:#1c3d52;
+    --sky-bot:#3c6e7a;
+    --amber:#e6a13c;
+    --rose:#c97b84;
+    --paper:#f8f1e2;
+    --paper-shadow:#e7dcc4;
+    --ink:#22303a;
+    --ink-soft:#5a6b73;
+    --perf:#c9bd9f;
+    --radius:2px;
+    --serif: 'Fraunces', Georgia, serif;
+    --mono: 'Space Mono', 'Courier New', monospace;
+    --script: 'Caveat', cursive;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    min-height:100vh;
+    font-family: var(--serif);
+    color:var(--ink);
+    background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bot) 45%, #6b8f83 75%, #a9c3a6 100%);
+    background-attachment: fixed;
+    padding: clamp(20px, 5vw, 64px) 16px 80px;
+    position:relative;
+    overflow-x:hidden;
+    padding-top: max(clamp(20px, 5vw, 64px), env(safe-area-inset-top, 0px));
+    padding-bottom: max(80px, env(safe-area-inset-bottom, 0px));
+  }
+  .cloud{
+    position:fixed;
+    border-radius:50%;
+    background: rgba(255,255,255,0.06);
+    filter: blur(2px);
+    pointer-events:none;
+    z-index:0;
+  }
+  .cloud.c1{width:220px;height:70px;top:8%;left:-40px;}
+  .cloud.c2{width:160px;height:50px;top:20%;right:-30px;}
+  .cloud.c3{width:280px;height:80px;top:60%;left:50%;transform:translateX(-50%);opacity:.6;}
+
+  .plane{
+    position:absolute;
+    top:6%;
+    left:-60px;
+    font-size:28px;
+    z-index:2;
+    animation: fly 3.2s ease-in-out 0.3s forwards;
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,.25));
+  }
+  @keyframes fly{
+    0%{ left:-60px; top:10%; transform:rotate(6deg);}
+    50%{ left:52%; top:2%; transform:rotate(2deg);}
+    100%{ left:106%; top:6%; transform:rotate(6deg);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .plane{ animation: none; left:70%; top:6%; }
+    html{scroll-behavior:auto;}
+  }
+
+  .ticket{
+    position:relative;
+    z-index:1;
+    max-width: 620px;
+    margin: 0 auto;
+    background: var(--paper);
+    box-shadow: 0 30px 60px -20px rgba(10,20,25,.45), 0 2px 0 rgba(255,255,255,.4) inset;
+    border-radius: var(--radius);
+  }
+  .stub{ padding: 40px 36px; }
+  .stub + .stub{ padding-top: 34px; }
+
+  .perf{
+    position:relative;
+    height:0;
+    border-top: 2px dashed var(--perf);
+    margin: 0 8px;
+  }
+  .perf::before, .perf::after{
+    content:"";
+    position:absolute;
+    top:-11px;
+    width:22px; height:22px;
+    background: var(--sky-bot);
+    border-radius:50%;
+  }
+  .perf::before{ left:-19px; }
+  .perf::after{ right:-19px; }
+
+  .kicker{
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: .12em;
+    color: var(--ink-soft);
+    display:flex;
+    justify-content:space-between;
+    margin-bottom: 22px;
+  }
+  h1{
+    font-family: var(--serif);
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-size: clamp(34px, 6vw, 46px);
+    line-height: 1.08;
+    margin: 0 0 14px;
+  }
+  .sub{
+    font-size: 17px;
+    color: var(--ink-soft);
+    max-width: 46ch;
+    line-height:1.5;
+    margin: 0 0 6px;
+  }
+
+  .letter p{
+    font-size: 17px;
+    line-height: 1.75;
+    margin: 0 0 16px;
+    max-width: 52ch;
+  }
+  .letter .to{
+    font-family: var(--script);
+    font-size: 24px;
+    margin-bottom: 18px;
+    color: var(--ink);
+  }
+  .letter .sign{
+    font-family: var(--script);
+    font-size: 26px;
+    margin-top: 10px;
+  }
+  .note-please{
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: .04em;
+    color: var(--rose);
+    border-left: 2px solid var(--rose);
+    padding-left: 12px;
+    margin-top: 20px;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 24px;
+  }
+  .field .lbl{
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .1em;
+    color: var(--ink-soft);
+    margin-bottom: 4px;
+  }
+  .field .val{
+    font-size: 18px;
+    font-weight:500;
+  }
+  .field .val a{ color: var(--ink); text-decoration-color: var(--amber); text-underline-offset:3px; }
+  .field.full{ grid-column: 1 / -1; }
+
+  .countdown{
+    margin-top: 24px;
+    background: rgba(230,161,60,0.14);
+    border: 1px solid rgba(230,161,60,0.4);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  .countdown .lbl{ font-family: var(--mono); font-size:11px; letter-spacing:.1em; color:var(--ink-soft);}
+  .countdown .clock{
+    font-family: var(--mono);
+    font-size: 20px;
+    font-weight:700;
+    color: var(--ink);
+    letter-spacing: .02em;
+  }
+
+  .actions{
+    display:flex;
+    gap: 12px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+  .btn{
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing:.04em;
+    padding: 12px 18px;
+    border-radius: var(--radius);
+    border: 1.5px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    cursor:pointer;
+    text-decoration:none;
+    display:inline-block;
+    transition: background .15s ease, color .15s ease;
+  }
+  .btn:hover{ background: var(--ink); color: var(--paper); }
+  .btn.primary{ background: var(--ink); color: var(--paper); }
+  .btn.primary:hover{ background: var(--amber); border-color:var(--amber); color: var(--ink); }
+  .btn:focus-visible{ outline: 3px solid var(--amber); outline-offset:2px; }
+
+  .gifts{
+    margin-top: 26px;
+    font-size: 15px;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+
+  .footer-stub{ text-align:center; }
+  .barcode{
+    height: 38px;
+    background: repeating-linear-gradient(90deg, var(--ink) 0 2px, transparent 2px 5px, var(--ink) 5px 6px, transparent 6px 10px, var(--ink) 10px 13px, transparent 13px 16px);
+    margin: 0 auto 20px;
+    max-width: 260px;
+    opacity: .85;
+  }
+  .with-love{
+    font-family: var(--script);
+    font-size: 30px;
+  }
+  .fine{
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-soft);
+    margin-top: 6px;
+    letter-spacing:.05em;
+  }
+
+  @media (max-width: 520px){
+    .grid{ grid-template-columns: 1fr; }
+    .stub{ padding: 30px 22px; }
+    .countdown{ flex-direction:column; align-items:flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cloud c1"></div>
+<div class="cloud c2"></div>
+<div class="cloud c3"></div>
+<div class="plane" aria-hidden="true">✈️</div>
+
+<main class="ticket">
+
+  <section class="stub">
+    <div class="kicker">
+      <span>KANDY (KDY)</span>
+      <span>→</span>
+      <span>NEW CHAPTER (NWC)</span>
+    </div>
+    <h1>A Little Farewell, <br>Before a New Beginning..</h1>
+    <p class="sub">As I prepare to leave for the UK, I wanted to pause and celebrate this chapter with the people who made it so special.</p>
+  </section>
+
+  <div class="perf" role="presentation"></div>
+
+  <section class="stub letter">
+    <p class="to">Dear Dulara ayya,</p>
+    <p>Thank you for being part of my journey. Thank you for the laughter, the memories, the endless support,
+        and the friendship I'll carry with me wherever life takes me.</p>
+    <p>It would mean the world to have you with me for one last lunch before I leave.</p>
+    <!-- <p class="sign">With love,<br>Oshini</p>
+    <p class="note-please">As I begin this new journey far from home,
+        I'd love to carry a little piece of each of you with me. Instead of a gift,
+        please bring me a handwritten note a memory, a wish, or a few words from your heart. I promise I'll treasure it forever.</p> -->
+  </section>
+
+  <div class="perf" role="presentation"></div>
+
+  <section class="stub">
+    <div class="grid">
+      <div class="field">
+        <div class="lbl">DATE</div>
+        <div class="val">Sun, 27 Sep 2026</div>
+      </div>
+      <div class="field">
+        <div class="lbl">BOARDING TIME</div>
+        <div class="val">11:30 AM</div>
+      </div>
+      <div class="field full">
+        <div class="lbl">GATE</div>
+        <div class="val"><a href="https://maps.app.goo.gl/rguCLW2Mn3ngqzy86" target="_blank" rel="noopener">Kings Kandy Rooftop — Level 4, 21 Raja Veediya, Kandy</a></div>
+      </div>
+    </div>
+
+    <div class="countdown">
+      <span class="lbl">BOARDING CLOSES IN</span>
+      <span class="clock" id="clock">— — : — — : — — : — —</span>
+    </div>
+
+    <div class="actions">
+      <a class="btn primary" href="https://maps.app.goo.gl/rguCLW2Mn3ngqzy86" target="_blank" rel="noopener">Get directions from Google Maps</a>
+    </div>
+
+    <!-- <p class="gifts">No gifts, please — just bring your smile.</p> -->
+  </section>
+
+  <div class="perf" role="presentation"></div>
+
+  <section class="stub letter">
+    <p class="to"></p>
+    <p>One little request</p>
+    
+    <p class="note-please">As I begin this new journey, I'd love to carry a little piece of each of you with me. <b>Instead of a gift,
+         please bring me a handwritten note</b>: a memory, a wish, or a few words from your heart. I promise I'll treasure it forever.</p>
+         <p class="sign">With love,<br>Oshini</p>
+  </section>
+
+ <div class="perf" role="presentation"></div>
+
+
+
+  <section class="stub footer-stub">
+    <div class="barcode" aria-hidden="true"></div>
+    <p class="with-love">See you at the table, one more time.</p>
+    <p class="fine">THIS TICKET IS NON-TRANSFERABLE — MEMORIES ONLY</p>
+  </section>
+
+</main>
+
+<script>
+  // ---- Countdown ----
+  const eventDate = new Date('2026-09-27T11:30:00+05:30');
+  const clock = document.getElementById('clock');
+  function pad(n){ return String(n).padStart(2,'0'); }
+  function tick(){
+    const now = new Date();
+    let diff = eventDate - now;
+    if (diff <= 0){
+      clock.textContent = 'NOW BOARDING';
+      return;
+    }
+    const d = Math.floor(diff / 86400000); diff -= d*86400000;
+    const h = Math.floor(diff / 3600000); diff -= h*3600000;
+    const m = Math.floor(diff / 60000); diff -= m*60000;
+    const s = Math.floor(diff / 1000);
+    clock.textContent = pad(d) + 'd : ' + pad(h) + 'h : ' + pad(m) + 'm : ' + pad(s) + 's';
+  }
+  tick();
+  setInterval(tick, 1000);
+</script>
+
+</body>
+</html>
